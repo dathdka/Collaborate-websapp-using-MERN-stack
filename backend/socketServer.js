@@ -11,10 +11,12 @@ const registerSocketServer = (server) => {
   
   
   
-  // io.use((socket, next) => {
-  //   console.log('check token');
-  //   authSocket(socket, next);
-  // });
+  io.use((socket, next) => {
+    console.log('check token');
+    console.log(socket);
+    authSocket(socket, next);
+    
+  });
   
   io.on("connection", (socket) => {
     console.log("user connected");

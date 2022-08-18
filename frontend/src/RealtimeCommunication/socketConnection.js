@@ -2,25 +2,25 @@ import io from "socket.io-client";
 var socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
-  const jwtToken = userDetails.token;
+  const jwtToken = userDetails.userDetails.token;
+  console.log(jwtToken);
   socket = io(
     "http://localhost:1250",
-    // {
-    //   transports: ['websocket'],
-    //   auth: {
-    //     token: jwtToken,
-    //   }
-    // }
+    {
+      auth: {
+        token: jwtToken,
+      }
+    }
     );
 
   socket.on("connect", () => {
 
     console.log("succesfully connected with socket.io server");
-    console.log(socket.id);
+    console.log(socket.id + 'connect');
 
   });
-  console.log(socket.connected);
+  console.log(socket.connected + ' check');
   socket.on("disconnect", () => {
-    console.log(socket.id);
+    console.log(socket.id + 'disconect');
   });
 };

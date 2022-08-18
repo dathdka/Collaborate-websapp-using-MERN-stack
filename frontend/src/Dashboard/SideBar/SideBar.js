@@ -7,7 +7,7 @@ const MainContainer = styled('div')({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'orange'
+    backgroundColor: '#ff8000'
 })
 
 const SideBar = () => {

@@ -1,0 +1,19 @@
+//LOGIN
+POST http://localhost:1250/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "mail" : "dat@gmail.com",
+    "password" : "123456"
+}
+
+###
+//REGISTER
+POST http://localhost:1250/api/auth/register HTTP/1.1
+content-Type: application/json
+
+{
+    "username" : "hoang dat",
+    "password" : "123456",
+    "mail" : "dathdka@gmail.com"
+}
