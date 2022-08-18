@@ -17,7 +17,7 @@ app.use(cors());
 app.use('/api/auth', authRoutes);
 
 const server = http.createServer(app);
-SocketServer.registerSocketServer(server);
+
 
 
 mogoose.connect(process.env.MONGO_URI).then(() => {
@@ -28,3 +28,4 @@ server.listen(PORT, ()=>{
     console.log('fail to connect');
     console.error(err);
 })
+SocketServer.registerSocketServer(server);
