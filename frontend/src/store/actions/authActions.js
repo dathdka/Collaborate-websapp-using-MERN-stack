@@ -1,8 +1,8 @@
 import * as api from '../../api';
 import { openAlertMessage } from './alertAction';
 
-export const authAction = {
-    SET_USER_DETAIL: 'AUTH.SET_USER_DETAILS'
+export const authActions = {
+    SET_USER_DETAILS: 'AUTH.SET_USER_DETAILS'
 }; 
 
 export const getActions = (dispatch)=>{
@@ -15,7 +15,7 @@ export const getActions = (dispatch)=>{
 
 const setUserDetails = (userDetails) =>{
     return{
-        type: authAction.SET_USER_DETAIL,
+        type: authActions.SET_USER_DETAILS,
         userDetails
     }
 }
@@ -29,7 +29,7 @@ const login = (userDetails, navigate) =>{
             dispatch(openAlertMessage(response?.exception?.response?.data))
         }else{
             console.log('ko loi');
-            const userDetails = response?.data;
+            const {userDetails} = response?.data;
             localStorage.setItem('user', JSON.stringify(userDetails));
             dispatch(setUserDetails(userDetails));
             navigate('/dashboard');

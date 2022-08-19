@@ -2,7 +2,7 @@ import io from "socket.io-client";
 var socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
-  const jwtToken = userDetails.userDetails.token;
+  const jwtToken = userDetails.token;
   // console.log(jwtToken);
   socket = io("http://localhost:1250", {
     auth: {

@@ -15,17 +15,16 @@ const Wrapper = styled("div")({
   height: "100vh",
   display: "flex",
 });
-const DashBoard = ({ setUserDetails, userDetails}) => {
+const DashBoard = ({ setUserDetails}) => {
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
-    console.log('use effect')
     if (!userDetails) {
       logout();
     } else {
       setUserDetails(JSON.parse(userDetails));
       connectWithSocketServer(JSON.parse(userDetails));
     }
-  }, [userDetails]);
+  }, []);
   return (
     <Wrapper>
       <SideBar />
