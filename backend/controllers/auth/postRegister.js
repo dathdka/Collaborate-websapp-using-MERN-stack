@@ -12,9 +12,9 @@ const postRegister = async (req,res)=>{
         const user = await User.create({
             username,
             password : encryptedPassword,
-            mail : mail.toLowerCase()
+            mail : mail.toLowerCase(),
+            friends: []
         });
-
 
         const token = jwt.sign({
             userId: user._id,

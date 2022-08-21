@@ -40,11 +40,13 @@ const login = (userDetails, navigate) =>{
 const register = (userDetails, navigate) =>{
     return async (dispatch) =>{
         const response = await api.register(userDetails);
-        console.log(response);
+
         if(response.error){
             dispatch(openAlertMessage(response?.exception?.response?.data))
         }else{
-            const {userDetails} = response?.data;
+            console.log(response.data);
+            const { userDetails } = response.data;
+            dispatch(openAlertMessage(response.data));
             localStorage.setItem('user', JSON.stringify(userDetails));
             dispatch(setUserDetails(userDetails));
             navigate('/dashboard');

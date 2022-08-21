@@ -7,7 +7,7 @@ const initState = {
     onlineUsers: []
 } 
 
-const reducer =  (state = initState(), action)=>{
+const reducer =  (state = initState, action)=>{
     switch (action.type) {
         case friendAction.SET_FRIENDS:
             return {
@@ -30,3 +30,5 @@ const reducer =  (state = initState(), action)=>{
             }
     }
 }
+
+export default reducer;

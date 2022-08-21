@@ -1,6 +1,8 @@
 const authSocket = require("./midleware/authSocket");
 const {newConnectionHandler} = require('./SocketHandler/newConnectionHandler');
 const disconnectHandler = require ('./SocketHandler/disconnectHandler');
+const serverStore = require('./serverStore');
+
 const registerSocketServer = (server) => {
   const io = require("socket.io")(server, {
     cors: {
@@ -9,7 +11,7 @@ const registerSocketServer = (server) => {
     },
   });
   
-  
+  serverStore.setSocketServerInstance(io);
   
   io.use((socket, next) => {
     console.log('check token');
