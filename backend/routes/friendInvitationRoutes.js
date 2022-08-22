@@ -8,6 +8,11 @@ const invitationSchema = Joi.object({
     targetMailAddress: Joi.string().email().required(),
 });
 
-router.post('/invite',auth, validator.body(invitationSchema), friendInvitationController.controllers.postInvite);
+const invitationDecisionSchema = Joi.object({
+    id: Joi.string().required(),
+});
 
+router.post('/invite',auth, validator.body(invitationSchema), friendInvitationController.controllers.postInvite);
+router.post('/accept',auth, validator.body(invitationDecisionSchema), friendInvitationController.controllers.postAccept);
+router.post('/reject',auth, validator.body(invitationDecisionSchema), friendInvitationController.controllers.postReject);
 module.exports = router;
