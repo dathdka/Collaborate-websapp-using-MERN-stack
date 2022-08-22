@@ -21,6 +21,9 @@ const postAccept = async (req,res) =>{
 
         await friendInvitation.findByIdAndDelete(id);
 
+        updateFriends.updateFriends(senderId.toString());
+        updateFriends.updateFriends(receiverId.toString());
+
         updateFriends.updateFriendsPendingInvitation(receiverId.toString());
 
         return res.status(200).send('accepted');

@@ -14,6 +14,13 @@ export const getActions = (dispatch)=>{
     }
 }
 
+export const setFriends = (friends) =>{
+    return {
+        type: friendAction.SET_FRIENDS,
+        friends
+    }
+}
+
 export const setPendingFriendsInvitations = (pendingFriendsInvitations) =>{
     return {
         type: friendAction.SET_PENDING_FRIENDS_INVITATIONS,
