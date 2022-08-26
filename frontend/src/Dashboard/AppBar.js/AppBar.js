@@ -17,19 +17,17 @@ const MainContainer = styled("div")({
   padding: "0 15px",
 });
 
-const AppBar = (props) => {
+const AppBar = ({chosenChatDetails}) => {
     const [name, setName] = useState('');
     const [id, setId] = useState('');
     const [isOnline, setIsOnline] = useState(false);
   //const { name, id } = props.chat.chosenChatDetails;
   useEffect(() =>{
-    if(props.chat.chosenChatDetails ){
-        setName(props.chat.chosenChatDetails.name);
-        setId(props.chat.chosenChatDetails.id);
+    if(chosenChatDetails ){
+        setName(chosenChatDetails.name);
+        setId(chosenChatDetails.id);
     }
-    console.log(name);
-    console.log(id);
-  }, [props.chat.chosenChatDetails]);
+  }, [chosenChatDetails]);
   return (
     <MainContainer>
       <DropDownMenu />
@@ -40,9 +38,9 @@ const AppBar = (props) => {
   );
 };
 
-const mapStoreStateToProps = (state) => {
+const mapStoreStateToProps = ({chat}) => {
   return {
-    ...state,
+    ...chat,
   };
 };
 
