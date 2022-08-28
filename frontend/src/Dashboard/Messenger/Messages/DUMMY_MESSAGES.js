@@ -4,7 +4,7 @@ const DUMMY_MESSAGES = [
       content: "hello",
       sameAuthor: false,
       author: {
-        username: "Marek",
+        username: "dat",
       },
       date: "22/01/2022",
       sameDay: false,
@@ -14,7 +14,7 @@ const DUMMY_MESSAGES = [
       content: "hello once again",
       sameAuthor: true,
       author: {
-        username: "Marek",
+        username: "dat",
       },
       date: "22/01/2022",
       sameDay: true,
@@ -24,7 +24,7 @@ const DUMMY_MESSAGES = [
       content: "hello third time",
       sameAuthor: true,
       author: {
-        username: "Marek",
+        username: "dat",
       },
       date: "23/01/2022",
       sameDay: false,

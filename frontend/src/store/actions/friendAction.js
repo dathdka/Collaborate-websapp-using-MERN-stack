@@ -36,7 +36,7 @@ export const setPendingFriendsInvitations = (pendingFriendsInvitations) => {
   };
 };
 
-export const sendFriendInvitation = (data, closeDialogHandler) => {
+const sendFriendInvitation = (data, closeDialogHandler) => {
   return async (dispatch) => {
     const res = await api.sendFriendInvitation(data);
     if (res.error) {
