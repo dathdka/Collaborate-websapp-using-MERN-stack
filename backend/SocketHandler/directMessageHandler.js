@@ -12,8 +12,8 @@ const directMessageHandler = async (socket, data) =>{
         var dat = new Date();
         const Message = await message.create({
             content: content,
-            authorId: userId,
-            date: dat,
+            author: userId,
+            date: `${dat.getDate()}-${dat.getMonth() + 1}-${dat.getFullYear()}`,
             time: dat.getHours()+":"+dat.getMinutes(),
             type: 'DIRECT'
         });

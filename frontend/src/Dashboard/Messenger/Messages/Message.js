@@ -44,13 +44,10 @@ const Message = ({
   content,
   sameAuthor,
   username,
-  date,
+  date,time,
   sameDay,
   userDetails,
 }) => {
-  var today = new Date();
-  var time =
-    today.getHours() + ":" + today.getMinutes();
   const name = userDetails.username;
   if (sameAuthor && sameDay) {
     return (

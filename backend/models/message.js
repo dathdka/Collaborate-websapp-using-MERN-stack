@@ -8,7 +8,7 @@ const messageSchema = new schema({
         ref: 'user'
     },
     content: {type: String},
-    date: {type: Date},
+    date: {type: String},
     time: {type: String},
     type: {type:String},
 });

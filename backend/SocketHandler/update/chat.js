@@ -29,7 +29,7 @@ const updateChatHistory = async (
       );
       activeConnections.forEach((socketId) => {
         io.to(socketId).emit("direct-chat-history", {
-          message: Conversation.messages,
+          messages: Conversation.messages,
           participants: Conversation.participants,
         });
       });
