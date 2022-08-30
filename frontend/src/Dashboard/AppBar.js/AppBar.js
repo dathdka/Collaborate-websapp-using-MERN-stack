@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import DropDownMenu from "./DropDownMenu";
 import { connect } from "react-redux";
+import BrushIcon from '@mui/icons-material/Brush';
+import ChatIcon from '@mui/icons-material/Chat';
 import FriendListItem from "../FriendSideBar/FriendList/FriendListItem";
+import { getActions } from "../../store/actions/chatActions";
 const MainContainer = styled("div")({
   position: "absolute",
   right: "0",
@@ -17,22 +20,34 @@ const MainContainer = styled("div")({
   padding: "0 15px",
 });
 
-const AppBar = ({chosenChatDetails}) => {
-    const [name, setName] = useState('');
-    const [id, setId] = useState('');
-    const [isOnline, setIsOnline] = useState(false);
-  //const { name, id } = props.chat.chosenChatDetails;
-  useEffect(() =>{
-    if(chosenChatDetails ){
-        setName(chosenChatDetails.name);
-        setId(chosenChatDetails.id);
+const AppBar = ({chosenChatDetails, setIsDraw ,setIsChat, isChat, isDraw}) => {
+    // const [name, setName] = useState('');
+    // const [id, setId] = useState('');
+    // const [isOnline, setIsOnline] = useState(false);
+
+    const draw = ()=>{
+      setIsDraw();
+      console.log('draw mode');
     }
-  }, [chosenChatDetails]);
+    const chat = ()=>{
+      setIsChat();
+      console.log('chat mode');
+    }
+  // useEffect(() =>{
+  //   if(chosenChatDetails ){
+  //       setName(chosenChatDetails.name);
+  //       setId(chosenChatDetails.id);
+  //   }
+  // }, [chosenChatDetails]);
+
   return (
     <MainContainer>
       <DropDownMenu />
-      {name && (
-        <FriendListItem username={name} id={id} key={id} isOnline= {isOnline} />
+      {(isDraw && chosenChatDetails) && (
+        <ChatIcon style={{backgroundColor : "#36393f"}} onClick = {chat}/>
+        )}
+      {(isChat && chosenChatDetails) &&(
+        <BrushIcon style={{backgroundColor : "#36393f"}} onClick = {draw}/>
       )}
     </MainContainer>
   );
@@ -43,5 +58,10 @@ const mapStoreStateToProps = ({chat}) => {
     ...chat,
   };
 };
+const mapActionsToProps = (dispatch) =>{
+  return {
+    ...getActions(dispatch)
+  }
+}
 
-export default connect(mapStoreStateToProps)(AppBar);
+export default connect(mapStoreStateToProps,mapActionsToProps)(AppBar);

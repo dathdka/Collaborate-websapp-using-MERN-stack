@@ -3,6 +3,8 @@ const initState = {
   chosenChatDetails: null,
   chatType: null,
   messages: [],
+  isChat: true,
+  isDraw: false
 };
 
 const reducer = (state = initState, action) => {
@@ -19,6 +21,18 @@ const reducer = (state = initState, action) => {
             ...state,
             messages : action.messages
         };
+    case chatActions.SET_IS_CHAT:
+        return{
+          ...state,
+          isChat : action.isChat,
+          isDraw : action.isDraw
+        }
+    case chatActions.SET_IS_DRAW:
+        return{
+          ...state,
+          isChat : action.isChat,
+          isDraw : action.isDraw
+        }
     default:
         return{
             ...state,

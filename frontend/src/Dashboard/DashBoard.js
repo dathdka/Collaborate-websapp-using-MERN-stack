@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import SideBar from "./SideBar/SideBar";
 import FriendSideBar from "./FriendSideBar/FriendSideBar";
 import Messenger from "./Messenger/Messenger";
+import Draw from "./Draw/Draw";
 import AppBar from "./AppBar.js/AppBar";
 import { logout } from "../shared/utils/auth";
 import { connect } from "react-redux";
@@ -15,7 +16,7 @@ const Wrapper = styled("div")({
   height: "100vh",
   display: "flex",
 });
-const DashBoard = ({ setUserDetails}) => {
+const DashBoard = ({ setUserDetails , isChat, isDraw}) => {
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
     if (!userDetails) {
@@ -25,11 +26,14 @@ const DashBoard = ({ setUserDetails}) => {
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
+  // useEffect(()=>{
+
+  // },[isChat, isDraw])
   return (
     <Wrapper>
       <SideBar />
       <FriendSideBar />
-      <Messenger />
+      {isChat ? <Messenger /> : <Draw/>}
       <AppBar />
     </Wrapper>
   );
@@ -40,4 +44,9 @@ const mapActionsToProps = (dispatch) => {
     ...getActions(dispatch),
   };
 };
-export default connect(null, mapActionsToProps)(DashBoard);
+const mapStoreStateToProps = (state) =>{
+  return{
+    ...state.chat,
+  }
+}
+export default connect(mapStoreStateToProps, mapActionsToProps)(DashBoard);
