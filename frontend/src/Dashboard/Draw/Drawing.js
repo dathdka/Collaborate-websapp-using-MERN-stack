@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { styled } from "@mui/system";
-import { Whiteboard } from "whiteboard-react";
+
 const MainContainer = styled("div")({
   flexGrow: 1,
   backgroundColor: "white",
@@ -8,13 +8,6 @@ const MainContainer = styled("div")({
   display: "flex",
 });
 const Draw = () => {
-  // const change = (event) =>{
-  //     console.log('the board is changing');
-  //     console.log(event.objects);
-  //     localStorage.setItem('draw', JSON.stringify(event));
-  //     console.log(JSON.parse(localStorage.getItem('draw')));
-  //     canvas.loadFromJSON(JSON.parse(localStorage.getItem('draw')));
-  // }
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);

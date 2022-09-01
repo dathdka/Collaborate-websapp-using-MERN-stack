@@ -53,3 +53,7 @@ export const sendDirectMessage = (data) => {
 export const getDirectChatHistory = (data) => {
   socket.emit("direct-chat-history", data);
 };
+
+export const sendDataCanvas = (data) =>{
+  console.log(data);
+}
