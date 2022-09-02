@@ -6,6 +6,10 @@ import BrushIcon from '@mui/icons-material/Brush';
 import ChatIcon from '@mui/icons-material/Chat';
 import FriendListItem from "../FriendSideBar/FriendList/FriendListItem";
 import { getActions } from "../../store/actions/chatActions";
+import { getDrawActions } from "../../store/actions/drawAction";
+import AddIcon from '@mui/icons-material/Add';
+import { createNewBoard } from "../../api";
+import { createBlankBoard} from '../../store/actions/drawAction';
 const MainContainer = styled("div")({
   position: "absolute",
   right: "0",
@@ -20,10 +24,12 @@ const MainContainer = styled("div")({
   padding: "0 15px",
 });
 
-const AppBar = ({chosenChatDetails, setIsDraw ,setIsChat, isChat, isDraw}) => {
-    // const [name, setName] = useState('');
-    // const [id, setId] = useState('');
-    // const [isOnline, setIsOnline] = useState(false);
+const AppBar = ({chosenChatDetails, setIsDraw ,setIsChat, isChat, isDraw, createBlankBoard}) => {
+
+    const newBoard = ()=>{
+      // createBlankBoard({receiverId:chosenChatDetails.id});
+      createNewBoard({receiverId:chosenChatDetails.id});
+    }
 
     const draw = ()=>{
       setIsDraw();
@@ -33,18 +39,15 @@ const AppBar = ({chosenChatDetails, setIsDraw ,setIsChat, isChat, isDraw}) => {
       setIsChat();
       console.log('chat mode');
     }
-  // useEffect(() =>{
-  //   if(chosenChatDetails ){
-  //       setName(chosenChatDetails.name);
-  //       setId(chosenChatDetails.id);
-  //   }
-  // }, [chosenChatDetails]);
 
   return (
     <MainContainer>
       <DropDownMenu />
       {(isDraw && chosenChatDetails) && (
+        <>
         <ChatIcon style={{backgroundColor : "#36393f"}} onClick = {chat}/>
+        <AddIcon onClick={newBoard}/>
+        </>
         )}
       {(isChat && chosenChatDetails) &&(
         <BrushIcon style={{backgroundColor : "#36393f"}} onClick = {draw}/>
@@ -60,7 +63,8 @@ const mapStoreStateToProps = ({chat}) => {
 };
 const mapActionsToProps = (dispatch) =>{
   return {
-    ...getActions(dispatch)
+    ...getActions(dispatch),
+    ...getDrawActions(dispatch)
   }
 }
 

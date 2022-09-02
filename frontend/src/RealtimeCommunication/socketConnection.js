@@ -39,9 +39,10 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("direct-chat-history", (data) => {
-    // console.log(`direct chat `);
-    // console.log(data);
     updateDirectChatHistory(data);
+  });
+  socket.on('direct-draw-history', (data)=>{
+    console.log(data.data);
   });
 };
 
@@ -55,5 +56,6 @@ export const getDirectChatHistory = (data) => {
 };
 
 export const sendDataCanvas = (data) =>{
-  console.log(data);
-}
+  // console.log(data)
+  socket.emit("send-draw", data);
+};

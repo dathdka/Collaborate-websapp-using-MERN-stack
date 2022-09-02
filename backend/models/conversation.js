@@ -10,6 +10,10 @@ const conversationSchema = new schema({
     messages: [{
         type: schema.Types.ObjectId,
         ref: 'message'
+    }],
+    draw: [{
+        type: schema.Types.ObjectId,
+        ref: 'draw'
     }]
 });
 

@@ -5,6 +5,7 @@ const {
 const disconnectHandler = require("./SocketHandler/disconnectHandler");
 const directMessageHandler = require('./SocketHandler/directMessageHandler');
 const directChatHistoryHandler = require('./SocketHandler/directChatHistoryHandler');
+const directDrawHistory = require('./SocketHandler/directDrawHistory');
 const serverStore = require("./serverStore");
 
 const registerSocketServer = (server) => {
@@ -28,8 +29,8 @@ const registerSocketServer = (server) => {
   };
 
   io.on("connection", (socket) => {
-    console.log("user connected");
-    console.log(socket.id);
+    // console.log("user connected");
+    // console.log(socket.id);
 
     newConnectionHandler(socket, io);
     emitOnlineUsers();
@@ -40,7 +41,11 @@ const registerSocketServer = (server) => {
 
     socket.on('direct-chat-history',(data) =>{
       directChatHistoryHandler(socket,data);
-    })
+    });
+
+    socket.on('send-draw',(data) =>{
+      directDrawHistory(socket,data);
+    });
 
     socket.on("disconnect", () => {
       disconnectHandler(socket);
@@ -51,7 +56,7 @@ const registerSocketServer = (server) => {
 
   setInterval (() =>{
     emitOnlineUsers();
-  },[5000]);
+  },[180000]);
 };
 
 module.exports = {

@@ -4,10 +4,9 @@ const message = require ('../models/message');
 const chatUpdate = require('./update/chat');
 
 const directMessageHandler = async (socket, data) =>{
-    console.log('handle messages is working');
+    // console.log('handle messages is working');
     try{
         const {userId} = socket.user;
-
         const {receiverUserId,content} = data;
         var dat = new Date();
         const Message = await message.create({
