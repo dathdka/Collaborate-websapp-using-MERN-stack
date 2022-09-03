@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import DropDownMenu from "./DropDownMenu";
 import { connect } from "react-redux";
-import BrushIcon from '@mui/icons-material/Brush';
-import ChatIcon from '@mui/icons-material/Chat';
-import FriendListItem from "../FriendSideBar/FriendList/FriendListItem";
-import { getActions } from "../../store/actions/chatActions";
+import BrushIcon from "@mui/icons-material/Brush";
+import ChatIcon from "@mui/icons-material/Chat";
+import AddIcon from "@mui/icons-material/Add";
 import { getDrawActions } from "../../store/actions/drawAction";
-import AddIcon from '@mui/icons-material/Add';
-import { createNewBoard } from "../../api";
-import { createBlankBoard} from '../../store/actions/drawAction';
+
+// import { createBlankBoard} from '../../store/actions/drawAction';
 const MainContainer = styled("div")({
   position: "absolute",
   right: "0",
@@ -24,48 +22,55 @@ const MainContainer = styled("div")({
   padding: "0 15px",
 });
 
-const AppBar = ({chosenChatDetails, setIsDraw ,setIsChat, isChat, isDraw, createBlankBoard}) => {
+const AppBar = ({
+  chosenChatDetails,
+  setIsDraw,
+  setIsChat,
+  isChat,
+  isDraw,
+  createBlankBoard,
+}) => {
+  const newBoard = () => {
+    createBlankBoard({ receiverId: chosenChatDetails.id });
+    // createNewBoard({receiverId:chosenChatDetails.id});
+  };
 
-    const newBoard = ()=>{
-      // createBlankBoard({receiverId:chosenChatDetails.id});
-      createNewBoard({receiverId:chosenChatDetails.id});
-    }
 
-    const draw = ()=>{
-      setIsDraw();
-      console.log('draw mode');
-    }
-    const chat = ()=>{
-      setIsChat();
-      console.log('chat mode');
-    }
+  const draw = () => {
+    setIsDraw();
+    console.log("draw mode");
+  };
+  const chat = () => {
+    setIsChat();
+    console.log("chat mode");
+  };
 
   return (
     <MainContainer>
       <DropDownMenu />
-      {(isDraw && chosenChatDetails) && (
+      {isDraw && chosenChatDetails && (
         <>
-        <ChatIcon style={{backgroundColor : "#36393f"}} onClick = {chat}/>
-        <AddIcon onClick={newBoard}/>
+          <ChatIcon style={{ backgroundColor: "#36393f" }} onClick={chat} />
+          <AddIcon onClick={newBoard} />
         </>
-        )}
-      {(isChat && chosenChatDetails) &&(
-        <BrushIcon style={{backgroundColor : "#36393f"}} onClick = {draw}/>
+      )}
+      {isChat && chosenChatDetails && (
+        <BrushIcon style={{ backgroundColor: "#36393f" }} onClick={draw} />
       )}
     </MainContainer>
   );
 };
 
-const mapStoreStateToProps = ({chat}) => {
+const mapStoreStateToProps = ({ chat, draw }) => {
   return {
     ...chat,
+    ...draw
   };
 };
-const mapActionsToProps = (dispatch) =>{
+const mapActionsToProps = (dispatch) => {
   return {
-    ...getActions(dispatch),
-    ...getDrawActions(dispatch)
-  }
-}
+    ...getDrawActions(dispatch),
+  };
+};
 
-export default connect(mapStoreStateToProps,mapActionsToProps)(AppBar);
+export default connect(mapStoreStateToProps, mapActionsToProps)(AppBar);

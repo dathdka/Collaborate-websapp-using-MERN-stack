@@ -6,6 +6,7 @@ import {
 } from "../store/actions/friendAction";
 import store from "../store/store";
 import updateDirectChatHistory from "../shared/utils/chat";
+import { setDraw } from "../store/actions/drawAction";
 
 var socket = null;
 
@@ -42,7 +43,8 @@ export const connectWithSocketServer = (userDetails) => {
     updateDirectChatHistory(data);
   });
   socket.on('direct-draw-history', (data)=>{
-    console.log(data.data);
+    // console.log(data.data);
+    store.dispatch(setDraw(data));
   });
 };
 

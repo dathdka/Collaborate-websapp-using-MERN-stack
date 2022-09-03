@@ -9,4 +9,6 @@ const drawSchema = Joi.object({
 });
 
 router.post('/create', auth, validator.body(drawSchema),drawController.controllers.createNewBoard);
+router.post('/get-collection', auth, validator.body(drawSchema),drawController.controllers.getCollection);
+
 module.exports = router;

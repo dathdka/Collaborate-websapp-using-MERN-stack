@@ -1,7 +1,10 @@
 import { drawActions } from "../actions/drawAction";
-import BLANK_BOARD from "../../Dashboard/Draw/BLANK_BOARD";
+import { BLANK_BOARD } from "../../Dashboard/Draw/BLANK_BOARD";
 const initState = {
-  board: null,
+  data: null,
+  collection: [],
+  isChat: true,
+  isDraw: false,
 };
 
 const reducer = (state = initState, action) => {
@@ -14,12 +17,30 @@ const reducer = (state = initState, action) => {
     case drawActions.SET_NEW_BOARD:
       return {
         ...state,
-        data: BLANK_BOARD.data,
+        data: action.data,
       };
+    case drawActions.SET_IS_CHAT:
+      return {
+        ...state,
+        isChat: action.isChat,
+        isDraw: action.isDraw,
+      };
+    case drawActions.SET_IS_DRAW:
+      return {
+        ...state,
+        isChat: action.isChat,
+        isDraw: action.isDraw,
+      };
+    case drawActions.SET_COLLECTION:
+      return{
+        ...state,
+        collection: action.collection
+      }
     default:
       return {
         ...state,
-        data: BLANK_BOARD.data,
       };
   }
 };
+
+export default reducer;

@@ -10,13 +10,17 @@ import { connect } from "react-redux";
 import { getActions } from "../store/actions/authActions";
 import { connectWithSocketServer } from "../RealtimeCommunication/socketConnection";
 import { Socket } from "socket.io-client";
+import Collection from "./Draw/Collection";
 
 const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
+  backgroundColor: '#6a6a6a'
+
 });
-const DashBoard = ({ setUserDetails , isChat, isDraw}) => {
+const DashBoard = ({ setUserDetails , isChat, isDraw, data}) => {
+  // console.log(data);
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
     if (!userDetails) {
@@ -26,14 +30,13 @@ const DashBoard = ({ setUserDetails , isChat, isDraw}) => {
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
-  // useEffect(()=>{
 
-  // },[isChat, isDraw])
   return (
     <Wrapper>
       <SideBar />
       <FriendSideBar />
-      {isChat ? <Messenger /> : <Draw/>}
+      {isChat && <Messenger />}
+      {data ? <Draw />: <Collection/>}
       <AppBar />
     </Wrapper>
   );
@@ -44,9 +47,10 @@ const mapActionsToProps = (dispatch) => {
     ...getActions(dispatch),
   };
 };
-const mapStoreStateToProps = (state) =>{
+const mapStoreStateToProps = ({chat , draw}) =>{
   return{
-    ...state.chat,
+    ...chat,
+    ...draw
   }
 }
 export default connect(mapStoreStateToProps, mapActionsToProps)(DashBoard);

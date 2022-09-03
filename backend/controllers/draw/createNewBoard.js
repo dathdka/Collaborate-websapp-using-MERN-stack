@@ -7,7 +7,7 @@ const createNewBoard = async (req,res) =>{
         var Conversation = await conversation.findOne({
             participants: {$all:[userId, receiverId]}
         })
-        var Draw = await draw.create({data : null});
+        var Draw = await draw.create({data : null, name : new Date()});
         if(Conversation){
             Conversation.draw.push(Draw._id.toString());
             await Conversation.save();
