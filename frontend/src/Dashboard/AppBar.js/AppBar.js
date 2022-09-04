@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import BrushIcon from "@mui/icons-material/Brush";
 import ChatIcon from "@mui/icons-material/Chat";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getDrawActions } from "../../store/actions/drawAction";
 
 // import { createBlankBoard} from '../../store/actions/drawAction';
@@ -29,21 +30,27 @@ const AppBar = ({
   isChat,
   isDraw,
   createBlankBoard,
+  data,
+  getCollection
 }) => {
   const newBoard = () => {
     createBlankBoard({ receiverId: chosenChatDetails.id });
     // createNewBoard({receiverId:chosenChatDetails.id});
   };
 
-
   const draw = () => {
     setIsDraw();
-    console.log("draw mode");
+    // console.log("draw mode");
   };
   const chat = () => {
-    setIsChat();
-    console.log("chat mode");
+    getCollection({ receiverId: chosenChatDetails.id });
+    setIsChat({isChat: true, isDraw:false});
+    // console.log("chat mode");
   };
+
+  const setBack = () =>{
+    setIsChat({isChat: false, isDraw: true});
+  }
 
   return (
     <MainContainer>
@@ -52,10 +59,13 @@ const AppBar = ({
         <>
           <ChatIcon style={{ backgroundColor: "#36393f" }} onClick={chat} />
           <AddIcon onClick={newBoard} />
+          {data &&<ArrowBackIcon onClick = {setBack}/>}
         </>
       )}
       {isChat && chosenChatDetails && (
-        <BrushIcon style={{ backgroundColor: "#36393f" }} onClick={draw} />
+        <>
+          <BrushIcon style={{ backgroundColor: "#36393f" }} onClick={draw} />
+        </>
       )}
     </MainContainer>
   );
@@ -64,7 +74,7 @@ const AppBar = ({
 const mapStoreStateToProps = ({ chat, draw }) => {
   return {
     ...chat,
-    ...draw
+    ...draw,
   };
 };
 const mapActionsToProps = (dispatch) => {

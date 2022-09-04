@@ -11,7 +11,7 @@ const getCollection = async (req, res) =>{
     }).populate({
         path: 'draw',
         model: 'draw',
-        select: '_id name'
+        select: '_id name data'
     });
     // console.log(Conversation);
     if(Conversation){
@@ -19,7 +19,9 @@ const getCollection = async (req, res) =>{
             collection: Conversation.draw
         })
     }
-    return res.status(409).send('not found')
+    return res.status(200).json({
+        collection: null
+    })
 }
 
 module.exports = getCollection;

@@ -7,18 +7,22 @@ const directDrawHistory = async (socket, data) => {
 
     //decode base64 to binary
     // var binary = Buffer.from(JSON.stringify( data.image), "base64");
+    console.log(data.canvasId);
     var receiverId = data.receiverId;
+    var canvasId = data.canvasId;
 
     var Conversation = await conversation.findOne({
       participants: { $all: [userId, receiverId] },
     });
 
-    var Draw = await draw.findById(Conversation.draw.at(-1));
-
-    Draw.data = data.image;
-    await Draw.save();
-
-    updateDraw(Conversation._id.toString())
+    var Draw = await draw.findById(canvasId);
+    if(Draw){
+      // console.log(Draw);
+      Draw.data = data.image;
+      await Draw.save();
+  
+      updateDraw(Conversation._id.toString(), canvasId, data.image)
+    }
 
 
     // var check = await

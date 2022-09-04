@@ -1,7 +1,12 @@
 const serverStore = require('../../serverStore');
 const conversation = require ('../../models/conversation');
-const updateDraw = async (conversationId) =>{
-    const Conversation = await conversation.findById(conversationId).populate('draw');
+const { where } = require('../../models/draw');
+const updateDraw = async (conversationId, canvasId, canvasData) =>{
+    const Conversation = await conversation.findById(conversationId).populate({
+      path : 'draw',
+      model: 'draw',
+      select: 'data',
+    });
       if (Conversation) {
         // var base64data = Buffer.from(JSON.stringify(Conversation.draw.at(-1)), "binary").toString("base64");
         const io = serverStore.getSocketServerInstance();
@@ -11,7 +16,9 @@ const updateDraw = async (conversationId) =>{
           );
           activeConnections.forEach((socketId) => {
             io.to(socketId).emit("direct-draw-history", {
-              data : Conversation.draw.at(-1)
+              // problem
+              _id: canvasId,
+              data : canvasData
             });
           });
         });

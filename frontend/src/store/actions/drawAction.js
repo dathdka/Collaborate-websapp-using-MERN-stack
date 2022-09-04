@@ -8,6 +8,7 @@ export const drawActions = {
   SET_IS_CHAT: "SET_IS_CHAT",
   SET_IS_DRAW: "SET_IS_DRAW",
   SET_COLLECTION: "DRAW.SET_COLLECTION",
+  SET_BACK: 'DRAW.SET_BACK'
 };
 
 export const getDrawActions = (dispatch) => {
@@ -16,16 +17,17 @@ export const getDrawActions = (dispatch) => {
     newBoard: () => dispatch(newBoard()),
     getCollection: (data) => dispatch(getCollection(data)),
     setCollection: (collection) =>dispatch(setCollection(collection)),
-    setIsChat: () => dispatch(setIsChat()),
+    setIsChat: (data) => dispatch(setIsChat(data)),
     setIsDraw: () => dispatch(setIsDraw()),
+    selectCollection: (data) => dispatch(selectCollection(data)),
   };
 };
 
-const setIsChat = () => {
+const setIsChat = (data) => {
   return {
     type: drawActions.SET_IS_CHAT,
-    isChat: true,
-    isDraw: false,
+    isChat: data.isChat,
+    isDraw: data.isDraw,
   };
 };
 
@@ -36,6 +38,11 @@ const setIsDraw = () => {
     isDraw: true,
   };
 };
+
+const selectCollection = (data) =>{
+  setDraw(data);
+}
+
 export const createBlankBoard = (data) => {
   return async (dispatch) => {
     const res = await api.createNewBoard(data);
@@ -43,30 +50,40 @@ export const createBlankBoard = (data) => {
       dispatch(openAlertMessage(res.exception?.response?.data));
     } else {
       dispatch(openAlertMessage("new board has been created"));
-      dispatch(newBoard());
+      dispatch(newBoard(res));
     }
   };
 };
 
-const newBoard = () => {
+const newBoard = (data) => {
+  // console.log(data.data)
   return {
     type: drawActions.SET_NEW_BOARD,
-    data: BLANK_BOARD.data,
+    id: data.data.id,
+    data: data.data.data,
   };
 };
+
+
 
 export const setDraw = (data) => {
   return {
     type: drawActions.SET_DRAW,
+    id: data._id,
     data: data.data,
   };
 };
 
 export const setCollection = (collection) => {
-  console.log(collection)
+  if(collection){
+    return {
+      type: drawActions.SET_COLLECTION,
+      collection
+    };
+  }
   return {
     type: drawActions.SET_COLLECTION,
-    collection
+    collection : []
   };
 };
 

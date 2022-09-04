@@ -35,8 +35,8 @@ const DashBoard = ({ setUserDetails , isChat, isDraw, data}) => {
     <Wrapper>
       <SideBar />
       <FriendSideBar />
-      {isChat && <Messenger />}
-      {data ? <Draw />: <Collection/>}
+      {isChat ? <Messenger /> : <> {data ? <Draw />: <Collection/>}</>}
+      
       <AppBar />
     </Wrapper>
   );

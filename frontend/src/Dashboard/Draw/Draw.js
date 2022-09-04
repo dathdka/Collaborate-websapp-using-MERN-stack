@@ -9,7 +9,7 @@ const MainContainer = styled("div")({
   marginTop: "50px",
   display: "flex",
 });
-const Draw = ({id, _id, data}) => {
+const Draw = ({chosenChatDetails, id,data}) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -32,8 +32,8 @@ const Draw = ({id, _id, data}) => {
       context.clearRect(0,0,canvas.width,canvas.height );
       context.drawImage(image,0,0,window.innerWidth*2,window.innerHeight*2,0,0,window.innerWidth,window.innerHeight);
     }
-    image.src = data.data;
-  }, [_id, data]);
+    image.src = data;
+  }, [id, data]);
 
 
   const startDrawing = ({ nativeEvent }) => {
@@ -47,7 +47,7 @@ const Draw = ({id, _id, data}) => {
     contextRef.current.closePath();
     setIsDrawing(false);
     const data = document.getElementById('canvas').toDataURL();
-    sendDataCanvas({image : data, receiverId: id});
+    sendDataCanvas({ image : data, receiverId: chosenChatDetails.id, canvasId: id});
   };
 
   const draw = ({ nativeEvent }) => {
@@ -73,7 +73,7 @@ const Draw = ({id, _id, data}) => {
 
 const mapStoreStateToProps = ({chat,draw}) =>{
   return {
-    ...chat.chosenChatDetails,
+    ...chat,
     ...draw
   }
 }
