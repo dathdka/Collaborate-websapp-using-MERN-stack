@@ -22,6 +22,7 @@ const Collection = ({ chosenChatDetails, isDraw, getCollection ,collection, sele
   const select = (_id, data) =>{
     // console.log(_id)
     // console.log(data)
+    
     store.dispatch(setDraw({_id,data}));
   }
   return (

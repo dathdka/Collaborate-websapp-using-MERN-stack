@@ -11,6 +11,7 @@ import { getActions } from "../store/actions/authActions";
 import { connectWithSocketServer } from "../RealtimeCommunication/socketConnection";
 import { Socket } from "socket.io-client";
 import Collection from "./Draw/Collection";
+import Fabric from "./Draw/Fabric";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -35,8 +36,8 @@ const DashBoard = ({ setUserDetails , isChat, isDraw, data}) => {
     <Wrapper>
       <SideBar />
       <FriendSideBar />
-      {isChat ? <Messenger /> : <> {data ? <Draw />: <Collection/>}</>}
-      
+      {/* {isChat ? <Messenger /> : <> {data ? <Draw />: <Collection/>}</>} */}
+      <Fabric />
       <AppBar />
     </Wrapper>
   );
