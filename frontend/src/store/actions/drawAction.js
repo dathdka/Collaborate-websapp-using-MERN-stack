@@ -49,21 +49,25 @@ export const createBlankBoard = (data) => {
     if (res.error) {
       dispatch(openAlertMessage(res.exception?.response?.data));
     } else {
+      console.log(res.data)
       dispatch(openAlertMessage("new board has been created"));
-      dispatch(newBoard(res));
+      // dispatch(newBoard(res));
     }
   };
 };
 
 const newBoard = (data) => {
-  // console.log(data.data)
-  return {
-    type: drawActions.SET_NEW_BOARD,
-    id: data.data.id,
-    data: data.data.data,
-  };
+  console.log(JSON.parse(data.data))
+  // return {
+  //   type: drawActions.SET_NEW_BOARD,
+  //   id: data.data.id,
+  //   data: data.data.data,
+  // };
 };
 
+// const getDataFromSocket = (data) => {
+
+// }
 
 
 export const setDraw = (data) => {

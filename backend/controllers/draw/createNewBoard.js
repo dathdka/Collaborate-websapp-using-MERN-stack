@@ -1,6 +1,7 @@
 const draw = require('../../models/draw');
 const conversation = require('../../models/conversation');
 const BLANK_BOARD = require('./BLANK_BOARD');
+const board = require('./BOARD');
 const createNewBoard = async (req,res) =>{
         const userId = req.user.userId;
         const receiverId = req.body.receiverId;
@@ -9,7 +10,7 @@ const createNewBoard = async (req,res) =>{
         })
         var dat = new Date();
         var Draw = await draw.create({
-            data : BLANK_BOARD.data, 
+            data : JSON.stringify(board), 
             name : `${dat.getDate()}-${dat.getMonth() + 1}-${dat.getFullYear()}  ${dat.getHours()}:${dat.getMinutes()}`,
         });
         if(Conversation){
@@ -24,7 +25,7 @@ const createNewBoard = async (req,res) =>{
         }
         return res.status(201).json({
             id: Draw._id,
-            data: Draw.data
+            data: JSON.parse(Draw.data)
         });
 }
 

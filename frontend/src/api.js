@@ -102,6 +102,14 @@ export const getCollection = async (data) =>{
   }
 }
 
+// export const getDataFromSocket = async(data) =>{
+//   try {
+//     return await 
+//   } catch (error) {
+    
+//   }
+// }
+
 const checkResponseCode = (exception) => {
   const responseCode = exception?.response?.status;
   if (responseCode) {
