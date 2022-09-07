@@ -18,7 +18,7 @@ const updateDraw = async (conversationId, canvasId, canvasData) =>{
             io.to(socketId).emit("direct-draw-history", {
               // problem
               _id: canvasId,
-              data : canvasData
+              push : canvasData
             });
           });
         });

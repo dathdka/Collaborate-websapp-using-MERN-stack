@@ -4,9 +4,12 @@ import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import { Button } from "@mui/material";
 import board from './BOARD';
-const Fabric = () => {
+import {connect} from 'react-redux';
+import { sendDataCanvas } from "../../RealtimeCommunication/socketConnection";
+import store from "../../store/store";
+import { setDraw } from "../../store/actions/drawAction";
+const Fabric = ({data, id, push, chosenChatDetails}) => {
   const [isDrawing, setIsDrawing] = useState(false);
-  var data = localStorage.getItem('canvas');
   useEffect(() => {
     var canvas = new fabric.Canvas("canv", {
       width: 1200,
@@ -14,18 +17,25 @@ const Fabric = () => {
       backgroundColor: "white",
     });
 
-    canvas.loadFromJSON(board);
-    console.log(board);
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.width = 5;
     canvas.freeDrawingBrush.color = "#00aeff";
-    if(data){
-      //push data from server to canvas
+    if(push){
       var result = JSON.parse(data)
-      console.log(result.objects)
-      result.objects.push(result.objects.at(-1))
-      console.log(result.objects)
-      canvas.loadFromJSON(JSON.stringify(result))
+      result.objects.push(push);
+      // console.log(result);
+      canvas.loadFromJSON(result);
+      store.dispatch(setDraw({_id: id, data: JSON.stringify(result)}))
+    }
+    else if(data){
+      var result = JSON.parse(data)
+      // console.log(result);
+      canvas.loadFromJSON(result);
+      //push data from server to canvas
+      // console.log(result.objects)
+      // result.objects.push(result.objects.at(-1))
+      // console.log(result.objects)
+      // canvas.loadFromJSON(JSON.stringify(result))
     }
     canvas
     .on("mouse:down", function (options) {
@@ -37,18 +47,23 @@ const Fabric = () => {
       })
       .on("mouse:up", function (options) {
         setIsDrawing(false)
-
-        // localStorage.setItem('canvas',JSON.stringify(canvas.toJSON()));
-        // console.log(canvas.toJSON().objects);
+        // console.log(canvas.toJSON().objects.at(-1));
+        sendDataCanvas({ image : canvas.toJSON().objects.at(-1), receiverId: chosenChatDetails.id, canvasId: id});
       });
-  }, []);
+  }, [push]);
 
   return (
     <>
       <canvas id="canv" width={1200} height={755} />
     </>
-
   );
 };
 
-export default Fabric;
+const mapStoreStateToProps = ({draw, chat}) =>{
+  return{
+    ...draw,
+    ...chat
+  }
+}
+
+export default connect(mapStoreStateToProps) (Fabric);

@@ -8,7 +8,8 @@ export const drawActions = {
   SET_IS_CHAT: "SET_IS_CHAT",
   SET_IS_DRAW: "SET_IS_DRAW",
   SET_COLLECTION: "DRAW.SET_COLLECTION",
-  SET_BACK: 'DRAW.SET_BACK'
+  SET_BACK: 'DRAW.SET_BACK',
+  PUSH_DATA: 'DRAW.PUSH_DATA'
 };
 
 export const getDrawActions = (dispatch) => {
@@ -20,6 +21,7 @@ export const getDrawActions = (dispatch) => {
     setIsChat: (data) => dispatch(setIsChat(data)),
     setIsDraw: () => dispatch(setIsDraw()),
     selectCollection: (data) => dispatch(selectCollection(data)),
+    pushData: (data) => dispatch(pushData(data))
   };
 };
 
@@ -49,20 +51,20 @@ export const createBlankBoard = (data) => {
     if (res.error) {
       dispatch(openAlertMessage(res.exception?.response?.data));
     } else {
-      console.log(res.data)
+      // console.log(res.data.data)
       dispatch(openAlertMessage("new board has been created"));
-      // dispatch(newBoard(res));
+      dispatch(newBoard(res.data));
     }
   };
 };
 
 const newBoard = (data) => {
-  console.log(JSON.parse(data.data))
-  // return {
-  //   type: drawActions.SET_NEW_BOARD,
-  //   id: data.data.id,
-  //   data: data.data.data,
-  // };
+  // console.log(data.data)
+  return {
+    type: drawActions.SET_NEW_BOARD,
+    id: data.id,
+    data: JSON.stringify(data.data),
+  };
 };
 
 // const getDataFromSocket = (data) => {
@@ -77,6 +79,14 @@ export const setDraw = (data) => {
     data: data.data,
   };
 };
+
+export const pushData = (data) =>{
+  return{
+    type: drawActions.PUSH_DATA,
+    id: data._id,
+    push: data.push
+  }
+}
 
 export const setCollection = (collection) => {
   if(collection){

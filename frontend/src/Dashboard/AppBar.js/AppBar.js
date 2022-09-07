@@ -47,7 +47,7 @@ const AppBar = ({
     setIsChat({isChat: true, isDraw:false});
     // console.log("chat mode");
   };
-
+  
   const setBack = () =>{
     setIsChat({isChat: false, isDraw: true});
   }
@@ -56,16 +56,16 @@ const AppBar = ({
     <MainContainer>
       <DropDownMenu />
       {isDraw && chosenChatDetails && (
-        <>
+        <div>
           <ChatIcon style={{ backgroundColor: "#36393f" }} onClick={chat} />
           <AddIcon onClick={newBoard} />
           {data &&<ArrowBackIcon onClick = {setBack}/>}
-        </>
+        </div>
       )}
       {isChat && chosenChatDetails && (
-        <>
+        <div>
           <BrushIcon style={{ backgroundColor: "#36393f" }} onClick={draw} />
-        </>
+        </div>
       )}
     </MainContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import SideBar from "./SideBar/SideBar";
 import FriendSideBar from "./FriendSideBar/FriendSideBar";
@@ -17,11 +17,17 @@ const Wrapper = styled("div")({
   width: "100%",
   height: "100vh",
   display: "flex",
-  backgroundColor: '#6a6a6a'
-
+  backgroundColor: "#6a6a6a",
 });
-const DashBoard = ({ setUserDetails , isChat, isDraw, data}) => {
+const MainContainer = styled("div")({
+  flexGrow: 1,
+  backgroundColor: "black",
+  marginTop: "50px",
+  display: "flex",
+});
+const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
   // console.log(data);
+  const [draw, setDraw] = useState(false)
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
     if (!userDetails) {
@@ -31,13 +37,24 @@ const DashBoard = ({ setUserDetails , isChat, isDraw, data}) => {
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
+  useEffect(()=>{
+    if(id)
+      setDraw(true);
+    else
+      setDraw(false)
+  },[id])
 
   return (
     <Wrapper>
       <SideBar />
       <FriendSideBar />
-      {/* {isChat ? <Messenger /> : <> {data ? <Draw />: <Collection/>}</>} */}
-      <Fabric />
+
+      {isChat ? (
+        <Messenger />
+      ) : (
+         <div>{draw ? <Fabric /> : <Collection />}</div>
+      )}
+      {/* <Draw /> */}
       <AppBar />
     </Wrapper>
   );
@@ -48,10 +65,10 @@ const mapActionsToProps = (dispatch) => {
     ...getActions(dispatch),
   };
 };
-const mapStoreStateToProps = ({chat , draw}) =>{
-  return{
+const mapStoreStateToProps = ({ chat, draw }) => {
+  return {
     ...chat,
-    ...draw
-  }
-}
+    ...draw,
+  };
+};
 export default connect(mapStoreStateToProps, mapActionsToProps)(DashBoard);

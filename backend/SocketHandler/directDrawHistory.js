@@ -6,8 +6,6 @@ const directDrawHistory = async (socket, data) => {
     var { userId } = socket.user;
 
     //decode base64 to binary
-    // var binary = Buffer.from(JSON.stringify( data.image), "base64");
-    console.log(data.canvasId);
     var receiverId = data.receiverId;
     var canvasId = data.canvasId;
 
@@ -17,10 +15,10 @@ const directDrawHistory = async (socket, data) => {
 
     var Draw = await draw.findById(canvasId);
     if(Draw){
-      // console.log(Draw);
-      Draw.data = data.image;
+      var getData = JSON.parse(Draw.data);
+      getData.objects.push(data.image);
+      Draw.data = JSON.stringify(getData);
       await Draw.save();
-  
       updateDraw(Conversation._id.toString(), canvasId, data.image)
     }
 

@@ -6,6 +6,7 @@ const initState = {
   collection: [],
   isChat: true,
   isDraw: false,
+  push : null
 };
 
 const reducer = (state = initState, action) => {
@@ -15,6 +16,7 @@ const reducer = (state = initState, action) => {
         ...state,
         id : action.id,
         data: action.data,
+        collection: []
       };
     case drawActions.SET_NEW_BOARD:
       return {
@@ -28,7 +30,8 @@ const reducer = (state = initState, action) => {
         isChat: action.isChat,
         isDraw: action.isDraw,
         data : null,
-        id: null
+        id: null,
+        push: null
       };
     case drawActions.SET_IS_DRAW:
       return {
@@ -40,6 +43,12 @@ const reducer = (state = initState, action) => {
       return{
         ...state,
         collection: action.collection
+      }
+    case drawActions.PUSH_DATA:
+      return{
+        ...state,
+        id: action.id,
+        push: action.push
       }
     default:
       return {
