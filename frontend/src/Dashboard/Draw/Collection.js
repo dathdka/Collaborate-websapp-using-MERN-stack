@@ -14,15 +14,16 @@ const MainContainer = styled("div")({
 const Collection = ({ chosenChatDetails, isDraw, getCollection ,collection, selectCollection}) => {
   useEffect(() => {
     if (chosenChatDetails) {
-      // console.log(chosenChatDetails.id);
       getCollection({ receiverId: chosenChatDetails.id });
+      // minimize canvas to display on collection 
+      // canvas.setWidth( <desired width> );
+      // canvas.setHeight( <desired height> );
+      // canvas.calcOffset();
     }
   }, [chosenChatDetails]);
-  // console.log(chosenChatDetails);
+
+
   const select = (_id, data) =>{
-    // console.log(_id)
-    // console.log(data)
-    
     store.dispatch(setDraw({_id,data}));
   }
   return (
