@@ -25,26 +25,28 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
     console.log(canvas._objects);
     if (push) {
       // old way
-      // var result = JSON.parse(data);
-      // result.objects.push(push);
+      var result = JSON.parse(data);
+      result.objects.push(push);
       // day truc tiep vao canvas;
-      // canvas.loadFromJSON(result);
-      // store.dispatch(setDraw({_id: id, data: JSON.stringify(result)}))
+      canvas.loadFromJSON(result);
+      store.dispatch(setDraw({_id: id, data: JSON.stringify(result)}))
 
 
+      
+      //TODO: push single objects into canvas
       // var temp = new fabric.Path(push.path, push);
-      fabric.util.enlivenObjects([push], function(objects) {
-        var origRenderOnAddRemove = canvas.renderOnAddRemove;
-        canvas.renderOnAddRemove = false;
+      // fabric.util.enlivenObjects([push], function(objects) {
+      //   var origRenderOnAddRemove = canvas.renderOnAddRemove;
+      //   canvas.renderOnAddRemove = false;
       
-        objects.forEach(function(o) {
-          canvas.add(o);
-        });
+      //   objects.forEach(function(o) {
+      //     canvas.add(o);
+      //   });
       
-        canvas.renderOnAddRemove = origRenderOnAddRemove;
-        canvas.renderAll();
-      });
-      console.log(canvas._objects);
+      //   canvas.renderOnAddRemove = origRenderOnAddRemove;
+      //   canvas.renderAll();
+      // });
+      // console.log(canvas._objects);
 
 
     } else if (data) {
