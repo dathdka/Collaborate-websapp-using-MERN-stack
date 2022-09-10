@@ -19,12 +19,7 @@ const Wrapper = styled("div")({
   display: "flex",
   backgroundColor: "#6a6a6a",
 });
-const MainContainer = styled("div")({
-  flexGrow: 1,
-  backgroundColor: "black",
-  marginTop: "50px",
-  display: "flex",
-});
+
 const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
   // console.log(data);
   const [draw, setDraw] = useState(false)
@@ -45,16 +40,15 @@ const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
   },[id])
 
   return (
-    <Wrapper>
+    <Wrapper key='uniqueKey'>
       <SideBar />
       <FriendSideBar />
 
-      {isChat ? (
+      {isChat ? 
         <Messenger />
-      ) : (
-         <div>{draw ? <Fabric /> : <Collection />}</div>
-      )}
-      {/* <Draw /> */}
+       : 
+         <div>{draw ? <Fabric translate="no"/> : <Collection translate="no"/>}</div>
+      }
       <AppBar />
     </Wrapper>
   );

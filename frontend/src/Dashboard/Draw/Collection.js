@@ -8,10 +8,8 @@ import { fabric } from "fabric";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 const MainContainer = styled("div")({
-  flexGrow: 1,
   backgroundColor: "#6a6a6a",
   marginTop: "50px",
-  display: "flex",
 });
 
 const Collection = ({
@@ -33,14 +31,16 @@ const Collection = ({
   }, [chosenChatDetails]);
   useEffect(() => {
     setCollections([]);
-    for (let i = page-1; i < page + 2 && i < collection.length; i++)
-      setCollections(collections => [...collections, collection.at(i)])
-      // collections.push(collection.at(i));
-      console.log(collection)
-      console.log(collections)
-  }, [page,isDraw]);
+    var temp = (page-1)*3;
+    for (let i = temp; i < temp + 3; i++){
+      console.log(i);
+      if(i < collection.length)
+        setCollections(collections => [...collections, collection.at(i)]);
+      else
+        return;
+    }
+  }, [page, collection]);
   useEffect(() => {
-    console.log(collections);
     collections.map(f => {
       var canvas = new fabric.Canvas(f._id, {
         backgroundColor: "white",
@@ -57,9 +57,9 @@ const Collection = ({
   };
   return (
     <MainContainer>
-      <Stack>
+      <div>
         {collections.map(f => (
-          <>
+          <div>
             <canvas
               id={f._id}
               width={240}
@@ -82,15 +82,15 @@ const Collection = ({
             >
               {f.name}
             </Button>
-          </>
+          </div>
         ))}
         <Pagination
-          count={Math.ceil((collection.length / 3)+1)}
+          count={Math.ceil((collection.length / 3))}
           page={page}
           onChange={changePage}
           color="secondary"
         />
-      </Stack>
+      </div>
     </MainContainer>
   );
 };

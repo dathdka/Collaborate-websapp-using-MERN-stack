@@ -19,10 +19,10 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.width = 5;
     canvas.freeDrawingBrush.color = "#00aeff";
-    var rect = new fabric.Rect({
-      backgroundColor: "red",
-    });
-    console.log(canvas._objects);
+    // var rect = new fabric.Rect({
+    //   backgroundColor: "red",
+    // });
+    // console.log(canvas._objects);
     if (push) {
       // old way
       var result = JSON.parse(data);
@@ -77,9 +77,9 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
   }, [push]);
 
   return (
-    <>
+    <div>
       <canvas id="canv" width={1200} height={755} />
-    </>
+    </div>
   );
 };
 
