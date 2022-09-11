@@ -47,7 +47,7 @@ const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
       {isChat ? 
         <Messenger />
        : 
-         <div>{draw ? <Fabric translate="no"/> : <Collection translate="no"/>}</div>
+         <div>{draw ? <Fabric /> : <Collection />}</div>
       }
       <AppBar />
     </Wrapper>

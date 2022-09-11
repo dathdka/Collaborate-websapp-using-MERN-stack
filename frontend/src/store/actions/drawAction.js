@@ -21,7 +21,8 @@ export const getDrawActions = (dispatch) => {
     setIsChat: (data) => dispatch(setIsChat(data)),
     setIsDraw: () => dispatch(setIsDraw()),
     selectCollection: (data) => dispatch(selectCollection(data)),
-    pushData: (data) => dispatch(pushData(data))
+    pushData: (data) => dispatch(pushData(data)),
+    deleteCollection: (data) =>dispatch(deleteCollection(data))
   };
 };
 
@@ -79,6 +80,18 @@ export const setDraw = (data) => {
     data: data.data,
   };
 };
+
+export const deleteCollection = (data) =>{
+  return async (dispatch) =>{
+    const res = await api.deleteCollection(data)
+    if (res.error) {
+      dispatch(openAlertMessage(res.exception?.response?.data));
+    } else {
+      // console.log(res.data.collection);
+      dispatch(setCollection(res.data.collection));
+    }
+  }
+}
 
 export const pushData = (data) =>{
   return{

@@ -11,7 +11,7 @@ const createNewBoard = async (req,res) =>{
         var dat = new Date();
         var Draw = await draw.create({
             data : JSON.stringify(board), 
-            name : `${dat.getDate()}-${dat.getMonth() + 1}-${dat.getFullYear()}  ${dat.getHours()}:${dat.getMinutes()}`,
+            name : `${dat.getDate()}-${dat.getMonth() + 1}-${dat.getFullYear()} ${dat.getHours()}:${dat.getMinutes()}`,
         });
         if(Conversation){
             Conversation.draw.push(Draw._id.toString());

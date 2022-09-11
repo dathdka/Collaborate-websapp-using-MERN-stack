@@ -8,7 +8,13 @@ const drawSchema = Joi.object({
     receiverId: Joi.string().required()
 });
 
+const deleteSchema = Joi.object({
+    collectionId: Joi.string().required(),
+    receiverId: Joi.string().required()
+})
+
 router.post('/create', auth, validator.body(drawSchema),drawController.controllers.createNewBoard);
 router.post('/get-collection', auth, validator.body(drawSchema),drawController.controllers.getCollection);
+router.post('/delete', auth, validator.body(deleteSchema), drawController.controllers.deleteCollection);
 
 module.exports = router;

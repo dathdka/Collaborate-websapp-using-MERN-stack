@@ -18,7 +18,7 @@ const AddFriendDialog = ({
 }) => {
   const [mail, setMail] = useState("");
   const [isFormValid, setIsFormValid] = useState("");
-
+  const [open, setOpen] = useState(false);
   const handleSendInvitation = () => {
     console.log('invite has been sent!!!')
     sendFriendInvitation({
@@ -34,9 +34,13 @@ const AddFriendDialog = ({
     setIsFormValid(validateMail(mail));
   }, [mail, setIsFormValid]);
 
+  useEffect(()=>{
+    setOpen (isDialogOpen ? true : false); 
+  },[isDialogOpen])
+
   return (
     <div>
-      <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+      <Dialog open={open} onClose={handleCloseDialog}>
         <DialogTitle>
           <Typography>Invite friend</Typography>
         </DialogTitle>

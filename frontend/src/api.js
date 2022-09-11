@@ -90,6 +90,18 @@ export const createNewBoard = async (data) => {
   }
 };
 
+export const deleteCollection = async (data) =>{
+  try {
+    return await apiclient.post('/draw/delete', data);
+  } catch (exception) {
+    checkResponseCode(exception);
+    return {
+      error: true,
+      exception,
+    };   
+  }
+}
+
 export const getCollection = async (data) =>{
   try{
     return await apiclient.post('/draw/get-collection', data);

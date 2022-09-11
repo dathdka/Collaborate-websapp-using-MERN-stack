@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/system";
 import { connect } from "react-redux";
-import { getDrawActions, setDraw } from "../../store/actions/drawAction";
+import { deleteCollection, getDrawActions, setDraw } from "../../store/actions/drawAction";
 import Button from "@mui/material/Button";
 import store from "../../store/store";
 import { fabric } from "fabric";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import DeleteIcon from '@mui/icons-material/Delete';
 const MainContainer = styled("div")({
   backgroundColor: "#6a6a6a",
   marginTop: "50px",
@@ -33,7 +33,6 @@ const Collection = ({
     setCollections([]);
     var temp = (page-1)*3;
     for (let i = temp; i < temp + 3; i++){
-      console.log(i);
       if(i < collection.length)
         setCollections(collections => [...collections, collection.at(i)]);
       else
@@ -45,27 +44,33 @@ const Collection = ({
       var canvas = new fabric.Canvas(f._id, {
         backgroundColor: "white",
       });
-      canvas.setWidth(240);
-      canvas.setHeight(151);
       canvas.isDrawingMode = false;
       canvas.loadFromJSON(JSON.parse(f.data));
+      canvas.setWidth(240);
+      canvas.setHeight(151);
+      canvas.setZoom(0.2)
       canvas.calcOffset();
     });
   }, [collections, page]);
   const select = (_id, data) => {
     store.dispatch(setDraw({ _id, data }));
   };
+
+  const deleteCollec = (_id, receiverId) =>{
+    store.dispatch(deleteCollection({collectionId: _id, receiverId: receiverId}));
+  }
   return (
     <MainContainer>
       <div>
         {collections.map(f => (
-          <div>
+          <div key = {f._id}>
             <canvas
               id={f._id}
               width={240}
               height={151}
               onClick={() => select(f._id, f.data)}
             />
+            <p>
             <Button
               style={{
                 width: "100%",
@@ -82,6 +87,8 @@ const Collection = ({
             >
               {f.name}
             </Button>
+            <DeleteIcon onClick={()=> deleteCollec(f._id, chosenChatDetails.id)}/>
+            </p>
           </div>
         ))}
         <Pagination
