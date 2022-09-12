@@ -33,7 +33,7 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
 
 
       
-      //TODO: push single objects into canvas
+      //TODO: push single objects into canvas (not done yet)
       // var temp = new fabric.Path(push.path, push);
       // fabric.util.enlivenObjects([push], function(objects) {
       //   var origRenderOnAddRemove = canvas.renderOnAddRemove;
@@ -74,6 +74,7 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
           canvasId: id,
         });
       });
+    //TODO: add more feature in fabric (not started yet)
   }, [push]);
 
   return (
