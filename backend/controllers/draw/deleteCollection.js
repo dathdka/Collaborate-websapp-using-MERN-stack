@@ -8,27 +8,34 @@ const deleteCollection = async (req, res) => {
   var Conversation = await conversation
     .findOne({
       participants: { $all: [userId, receiverId] },
-    })
-    // .populate({
-    //   path: "draw",
-    //   model: "draw",
-    //   select: "_id data name",
-    // });
+    }).populate({
+      path: 'draw',
+      model: 'draw',
+      select: '_id name data'
+  });
     var Draw  = await draw.findById(deleteId);
   if (Conversation && Draw) {
-    //TODO: delete collection
+    //TODO: delete collection (done)
     await Conversation.update(
       { $pull: { draw: Draw._id.toString() } }
     );
     
+    var ConversationToSend = await conversation
+    .findOne({
+      participants: { $all: [userId, receiverId] },
+    }).populate({
+      path: 'draw',
+      model: 'draw',
+      select: '_id name data'
+  });
     
     var Draw = await draw.findByIdAndDelete(deleteId);
     console.log(Draw._id.toString());
     return res.status(201).json({
-      collection: Conversation.draw,
+      collection: ConversationToSend.draw,
     });
   } else {
-    return res.status(401).send("something went wrong");
+    return res.status(402).send("something went wrong");
   }
 };
 

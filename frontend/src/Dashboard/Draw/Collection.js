@@ -31,10 +31,12 @@ const Collection = ({
   }, [chosenChatDetails]);
   useEffect(() => {
     setCollections([]);
-    var temp = (page-1)*3;
-    for (let i = temp; i < temp + 3; i++){
-      if(i < collection.length)
+    var temp = (page-1)*8;
+    for (let i = temp; i < temp + 8; i++){
+      if(i < collection.length){
+        console.log(collection.at(i));
         setCollections(collections => [...collections, collection.at(i)]);
+      }
       else
         return;
     }
@@ -61,16 +63,16 @@ const Collection = ({
   }
   return (
     <MainContainer>
-      <div>
+      <div className="row" style={{width: 1200}}>
         {collections.map(f => (
-          <div key = {f._id}>
+          <div key = {f._id}  className = 'col-lg-3' style={{ paddingLeft: 60}}>
             <canvas
               id={f._id}
               width={240}
               height={151}
               onClick={() => select(f._id, f.data)}
             />
-            <p>
+            <th>
             <Button
               style={{
                 width: "100%",
@@ -88,11 +90,11 @@ const Collection = ({
               {f.name}
             </Button>
             <DeleteIcon onClick={()=> deleteCollec(f._id, chosenChatDetails.id)}/>
-            </p>
+            </th>
           </div>
         ))}
-        <Pagination
-          count={Math.ceil((collection.length / 3))}
+        <Pagination style={{ paddingLeft: 500 }}
+          count={Math.ceil((collection.length / 8))}
           page={page}
           onChange={changePage}
           color="secondary"
