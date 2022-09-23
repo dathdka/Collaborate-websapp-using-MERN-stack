@@ -52,6 +52,7 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
     } else if (data) {
       var result = JSON.parse(data);
       canvas.loadFromJSON(result);
+      console.log(document.getElementById('canv').toDataURL());
       //push data from server to canvas
       // console.log(result.objects)
       // result.objects.push(result.objects.at(-1))
@@ -76,7 +77,7 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
       });
     //TODO: add more feature in fabric (not started yet)
   }, [push]);
-
+  
   return (
     <div>
       <canvas id="canv" width={1200} height={755} />

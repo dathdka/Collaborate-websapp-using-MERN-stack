@@ -11,12 +11,13 @@ import { getDrawActions } from "../../store/actions/drawAction";
 // import { createBlankBoard} from '../../store/actions/drawAction';
 const MainContainer = styled("div")({
   position: "absolute",
+  left: '295px',
   right: "0",
   top: "0",
-  height: "48px",
+  height: "50px",
   borderBottom: "1px solid black",
   backgroundColor: "#36393f",
-  width: "calc(100% - 326px)",
+  width: "calc(100% - 295px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
