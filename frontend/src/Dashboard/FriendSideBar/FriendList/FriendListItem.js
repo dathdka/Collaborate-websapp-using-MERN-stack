@@ -20,7 +20,7 @@ const FriendListItem = ({ id, username, isOnline, setChosenChatDetails }) => {
         alignItems: "center",
         justifyContent: "flex-start",
         textTransform: "none",
-        color: "yellow",
+        color: "black",
         position: "relative",
       }}
     >

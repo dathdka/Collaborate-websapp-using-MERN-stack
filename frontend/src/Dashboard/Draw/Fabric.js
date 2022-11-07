@@ -12,7 +12,7 @@ const Fabric = ({ data, id, push, chosenChatDetails }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   useEffect(() => {
     var canvas = new fabric.Canvas("canv", {
-      width: 1200,
+      width: 1180,
       height: 755,
       backgroundColor: "white",
     });
