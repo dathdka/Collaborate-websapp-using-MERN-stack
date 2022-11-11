@@ -10,6 +10,7 @@ import { getActions } from "../store/actions/authActions";
 import { connectWithSocketServer } from "../RealtimeCommunication/socketConnection";
 import Collection from "./Draw/Collection";
 import Fabric from "./Draw/Fabric";
+import Room from "./Room/Room";
 
 const Wrapper = styled("div")({
   width: "100%",
@@ -18,9 +19,9 @@ const Wrapper = styled("div")({
   backgroundColor: "#6a6a6a",
 });
 
-const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
+const DashBoard = ({ setUserDetails, isChat, isDraw, id, data , isUserInRoom}) => {
   // console.log(data);
-  const [draw, setDraw] = useState(false)
+  const [draw, setDraw] = useState(false);
   useEffect(() => {
     const userDetails = localStorage.getItem("user");
     if (!userDetails) {
@@ -30,24 +31,19 @@ const DashBoard = ({ setUserDetails, isChat, isDraw, id, data }) => {
       connectWithSocketServer(JSON.parse(userDetails));
     }
   }, []);
-  useEffect(()=>{
-    if(id)
-      setDraw(true);
-    else
-      setDraw(false)
-  },[id])
+  useEffect(() => {
+    if (id) setDraw(true);
+    else setDraw(false);
+  }, [id]);
 
   return (
-    <Wrapper key='uniqueKey'>
+    <Wrapper key="uniqueKey">
       <SideBar />
       <FriendSideBar />
 
-      {isChat ? 
-        <Messenger />
-       : 
-         <div>{draw ? <Fabric /> : <Collection />}</div>
-      }
+      {isChat ? <Messenger /> : <div>{draw ? <Fabric /> : <Collection />}</div>}
       <AppBar />
+      {isUserInRoom && <Room/>}
     </Wrapper>
   );
 };
@@ -57,8 +53,9 @@ const mapActionsToProps = (dispatch) => {
     ...getActions(dispatch),
   };
 };
-const mapStoreStateToProps = ({ chat, draw }) => {
+const mapStoreStateToProps = ({ chat, draw, room }) => {
   return {
+    ...room,
     ...chat,
     ...draw,
   };

@@ -6,6 +6,7 @@ import FriendsList from './FriendList/FriendList';
 import PendingInvitations from './PendingInvitations/PendingInvitations';
 
 const MainContainer =styled('div')({
+    position : 'block',
     width : '225px',
     height: '100%',
     display: 'flex',
