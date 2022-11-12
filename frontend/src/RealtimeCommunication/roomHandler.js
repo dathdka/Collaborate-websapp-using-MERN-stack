@@ -15,57 +15,57 @@ export const createNewRoom = () => {
   store.dispatch(setOpenRoom(true, true));
   // const successCalbackFunc = () => {
 
-  //   // const audioOnly = store.getState().room.audioOnly;
-  //   // store.dispatch(setIsUserJoinedOnlyWithAudio(audioOnly));
-  //   // socketConnection.createNewRoom();
+    const audioOnly = store.getState().room.audioOnly;
+    store.dispatch(setIsUserJoinedOnlyWithAudio(audioOnly));
+    socketConnection.createNewRoom();
   // };
 
-//   const audioOnly = store.getState().room.audioOnly;
+  // const audioOnly = store.getState().room.audioOnly;
 //   webRTCHandler.getLocalStreamPreview(audioOnly, successCalbackFunc);
 };
 
-// export const newRoomCreated = (data) => {
-//   const { roomDetails } = data;
-//   store.dispatch(setRoomDetails(roomDetails));
-// };
+export const newRoomCreated = (data) => {
+  const { roomDetails } = data;
+  store.dispatch(setRoomDetails(roomDetails));
+};
 
-// export const updateActiveRooms = (data) => {
-//   const { activeRooms } = data;
+export const updateActiveRooms = (data) => {
+  const { activeRooms } = data;
 
-//   const friends = store.getState().friends.friends;
-//   const rooms = [];
+  const friends = store.getState().friends.friends;
+  const rooms = [];
 
-//   const userId = store.getState().auth.userDetails?._id;
+  const userId = store.getState().auth.userDetails?._id;
 
-//   activeRooms.forEach((room) => {
-//     const isRoomCreatedByMe = room.roomCreator.userId === userId;
+  activeRooms.forEach((room) => {
+    const isRoomCreatedByMe = room.roomCreator.userId === userId;
 
-//     if (isRoomCreatedByMe) {
-//       rooms.push({ ...room, creatorUsername: "Me" });
-//     } else {
-//       friends.forEach((f) => {
-//         if (f.id === room.roomCreator.userId) {
-//           rooms.push({ ...room, creatorUsername: f.username });
-//         }
-//       });
-//     }
-//   });
+    if (isRoomCreatedByMe) {
+      rooms.push({ ...room, creatorUsername: "Me" });
+    } else {
+      friends.forEach((f) => {
+        if (f.id === room.roomCreator.userId) {
+          rooms.push({ ...room, creatorUsername: f.username });
+        }
+      });
+    }
+  });
 
-//   store.dispatch(setActiveRooms(rooms));
-// };
+  store.dispatch(setActiveRooms(rooms));
+};
 
-// export const joinRoom = (roomId) => {
-//   const successCalbackFunc = () => {
-//     store.dispatch(setRoomDetails({ roomId }));
-//     store.dispatch(setOpenRoom(false, true));
-//     const audioOnly = store.getState().room.audioOnly;
-//     store.dispatch(setIsUserJoinedOnlyWithAudio(audioOnly));
-//     socketConnection.joinRoom({ roomId });
-//   };
+export const joinRoom = (roomId) => {
+  // const successCalbackFunc = () => {
+    store.dispatch(setRoomDetails({ roomId }));
+    store.dispatch(setOpenRoom(false, true));
+    const audioOnly = store.getState().room.audioOnly;
+    store.dispatch(setIsUserJoinedOnlyWithAudio(audioOnly));
+    socketConnection.joinRoom({ roomId });
+  // };
 
-//   const audioOnly = store.getState().room.audioOnly;
-//   webRTCHandler.getLocalStreamPreview(audioOnly, successCalbackFunc);
-// };
+  // const audioOnly = store.getState().room.audioOnly;
+  // webRTCHandler.getLocalStreamPreview(audioOnly, successCalbackFunc);
+};
 
 // export const leaveRoom = () => {
 //   const roomId = store.getState().room.roomDetails.roomId;

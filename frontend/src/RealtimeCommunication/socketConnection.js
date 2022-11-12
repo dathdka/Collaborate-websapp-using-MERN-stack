@@ -8,7 +8,7 @@ import store from "../store/store";
 import updateDirectChatHistory from "../shared/utils/chat";
 import { pushData, setDraw } from "../store/actions/drawAction";
 import { chatActions } from "../store/actions/chatActions";
-
+import * as roomHandler from "./roomHandler";
 var socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -48,6 +48,14 @@ export const connectWithSocketServer = (userDetails) => {
     if(data._id.toString() === id.toString())
       store.dispatch(pushData(data));
   });
+  socket.on('room-create', (data) =>{
+    roomHandler.newRoomCreated(data)
+  })
+
+  socket.on('active-rooms', data=>{
+    roomHandler.updateActiveRooms(data)
+  })
+
 };
 
 export const sendDirectMessage = (data) => {
@@ -63,3 +71,11 @@ export const sendDataCanvas = (data) =>{
   // console.log(data)
   socket.emit("send-draw", data);
 };
+
+export const createNewRoom = () =>{
+  socket.emit('room-create')
+}
+
+export const joinRoom = (data) =>{
+  socket.emit('room-join', data);
+}
