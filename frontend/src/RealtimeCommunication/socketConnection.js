@@ -56,6 +56,10 @@ export const connectWithSocketServer = (userDetails) => {
     roomHandler.updateActiveRooms(data)
   })
 
+  socket.on('conn-prepare', data=>{
+    console.log('prepare to incoming connection')
+  })
+
 };
 
 export const sendDirectMessage = (data) => {
@@ -78,4 +82,8 @@ export const createNewRoom = () =>{
 
 export const joinRoom = (data) =>{
   socket.emit('room-join', data);
+}
+
+export const leaveRoom = (data) =>{
+  socket.emit('room-leave', data)
 }

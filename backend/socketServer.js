@@ -6,6 +6,10 @@ const disconnectHandler = require("./SocketHandler/disconnectHandler");
 const directMessageHandler = require('./SocketHandler/directMessageHandler');
 const directChatHistoryHandler = require('./SocketHandler/directChatHistoryHandler');
 const directDrawHistory = require('./SocketHandler/directDrawHistory');
+const roomCreateHandler = require('./SocketHandler/roomCreateHandler')
+const roomJoinHandler = require('./SocketHandler/roomJoinHandler')
+const roomLeaveHandler = require('./SocketHandler/roomLeaveHandler')
+
 const serverStore = require("./serverStore");
 
 const registerSocketServer = (server) => {
@@ -19,7 +23,6 @@ const registerSocketServer = (server) => {
   serverStore.setSocketServerInstance(io);
 
   io.use((socket, next) => {
-    console.log("check token");
     authSocket(socket, next);
   });
 
@@ -29,8 +32,6 @@ const registerSocketServer = (server) => {
   };
 
   io.on("connection", (socket) => {
-    // console.log("user connected");
-    // console.log(socket.id);
 
     newConnectionHandler(socket, io);
     emitOnlineUsers();
@@ -46,6 +47,18 @@ const registerSocketServer = (server) => {
     socket.on('send-draw',(data) =>{
       directDrawHistory(socket,data);
     });
+
+    socket.on('room-create', ()=>{
+      roomCreateHandler(socket)
+    })
+
+    socket.on('room-join', (data)=>{
+      roomJoinHandler(socket,data);
+    })
+    
+    socket.on('room-leave', data =>{
+      roomLeaveHandler(socket,data)
+    })
 
     socket.on("disconnect", () => {
       disconnectHandler(socket);
