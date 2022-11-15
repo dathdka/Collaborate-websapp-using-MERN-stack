@@ -12,8 +12,8 @@ import * as socketConnection from "./socketConnection";
 import * as webRTCHandler from "./webRTCHandler";
 
 export const createNewRoom = () => {
-  store.dispatch(setOpenRoom(true, true));
   const successCalbackFunc = () => {
+    store.dispatch(setOpenRoom(true, true));
 
     const audioOnly = store.getState().room.audioOnly;
     store.dispatch(setIsUserJoinedOnlyWithAudio(audioOnly));
@@ -83,10 +83,9 @@ export const leaveRoom = () => {
   }
 
   store.dispatch(setRemoteStreams([]));
-  // webRTCHandler.closeAllConnections();
+  webRTCHandler.closeAllConnections();
 
   socketConnection.leaveRoom({ roomId });
   store.dispatch(setRoomDetails(null));
   store.dispatch(setOpenRoom(false, false));
 };
-

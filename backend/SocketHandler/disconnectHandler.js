@@ -3,12 +3,14 @@ const roomLeaveHandler = require("./roomLeaveHandler");
 
 const disconnectHandler = (socket) => {
   const activeRooms = serverStore.getActiveRooms();
+
   activeRooms.forEach((activeRoom) => {
     const userInRoom = activeRoom.participants.some(
-      (paticipant) => paticipant.socketId === socket.id
+      (participant) => participant.socketId === socket.id
     );
-    if(userInRoom){
-        roomLeaveHandler(socket, {roomId : activeRoom.roomId})
+
+    if (userInRoom) {
+      roomLeaveHandler(socket, { roomId: activeRoom.roomId });
     }
   });
 

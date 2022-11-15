@@ -71,6 +71,11 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on('conn-signal', data =>{
     webRTCHandler.handleSignalingData(data)
   })
+
+  socket.on('room-participant-left', data =>{
+    console.log('a user just left room')
+    webRTCHandler.handleParticipantLeftRoom(data)
+  })
 };
 
 export const sendDirectMessage = (data) => {

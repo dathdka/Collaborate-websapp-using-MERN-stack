@@ -24,9 +24,9 @@ const RoomButtons = (props) => {
   return (
     <MainContainer>
       {/* {!isUserJoinedWithOnlyAudio && <ScreenShareButton {...props} />} */}
-      {/* <MicButton localStream={localStream} /> */}
+      <MicButton localStream={localStream} />
       <CloseRoomButton />
-      {/* {!isUserJoinedWithOnlyAudio && <CameraButton localStream={localStream} />} */}
+      {!isUserJoinedWithOnlyAudio && <CameraButton localStream={localStream} />}
     </MainContainer>
   );
 };
