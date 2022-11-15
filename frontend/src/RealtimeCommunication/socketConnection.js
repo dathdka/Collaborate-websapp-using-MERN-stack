@@ -9,6 +9,7 @@ import updateDirectChatHistory from "../shared/utils/chat";
 import { pushData, setDraw } from "../store/actions/drawAction";
 import { chatActions } from "../store/actions/chatActions";
 import * as roomHandler from "./roomHandler";
+import * as webRTCHandler from './webRTCHandler' 
 var socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -57,9 +58,19 @@ export const connectWithSocketServer = (userDetails) => {
   })
 
   socket.on('conn-prepare', data=>{
-    console.log('prepare to incoming connection')
+    const {connUserSocketId} = data
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, false)
+    socket.emit('conn-init',{connUserSocketId: connUserSocketId})
   })
 
+  socket.on('conn-init', data =>{
+    const {connUserSocketId} = data
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, true)
+  })
+
+  socket.on('conn-signal', data =>{
+    webRTCHandler.handleSignalingData(data)
+  })
 };
 
 export const sendDirectMessage = (data) => {
@@ -86,4 +97,8 @@ export const joinRoom = (data) =>{
 
 export const leaveRoom = (data) =>{
   socket.emit('room-leave', data)
+}
+
+export const signalPeerData = (data) =>{
+  socket.emit('conn-signal', data)
 }

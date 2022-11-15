@@ -15,7 +15,6 @@ const MainContainer = styled('div')({
 })
 
 const SideBar = ({ activeRooms, isUserInRoom }) => {
-    console.log(activeRooms)
     return (
       <MainContainer>
         <MainPageButton />

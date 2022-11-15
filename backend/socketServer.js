@@ -9,6 +9,8 @@ const directDrawHistory = require('./SocketHandler/directDrawHistory');
 const roomCreateHandler = require('./SocketHandler/roomCreateHandler')
 const roomJoinHandler = require('./SocketHandler/roomJoinHandler')
 const roomLeaveHandler = require('./SocketHandler/roomLeaveHandler')
+const roomInitializeConnectionHandler = require('./SocketHandler/roomInitializeConnectionHandler')
+const roomSigalingDataHandler = require('./SocketHandler/roomSigalingDataHandler')
 
 const serverStore = require("./serverStore");
 
@@ -60,6 +62,13 @@ const registerSocketServer = (server) => {
       roomLeaveHandler(socket,data)
     })
 
+    socket.on('conn-init', data =>{
+      roomInitializeConnectionHandler(socket,data)
+    })
+
+    socket.on('conn-signal', data =>{
+      roomSigalingDataHandler(socket, data)
+    })
     socket.on("disconnect", () => {
       disconnectHandler(socket);
     });
