@@ -7,7 +7,6 @@ const getConfiguration = () => {
   const turnIceServers = null;
 
   if (turnIceServers) {
-    // TODO use TURN server credentials
   } else {
     console.warn("Using only STUN server");
     return {
@@ -32,6 +31,7 @@ const defaultConstraints = {
 
 export const getLocalStreamPreview = (onlyAudio = false, callbackFunc) => {
   const constraints = onlyAudio ? onlyAudioConstraints : defaultConstraints;
+
   navigator.mediaDevices
     .getUserMedia(constraints)
     .then((stream) => {
@@ -39,7 +39,7 @@ export const getLocalStreamPreview = (onlyAudio = false, callbackFunc) => {
       callbackFunc();
     })
     .catch((err) => {
-      store.dispatch(setLocalStream(null));
+      // store.dispatch(setLocalStream(null));
       callbackFunc();
       console.log(err);
       console.log("Cannot get an access to local stream");

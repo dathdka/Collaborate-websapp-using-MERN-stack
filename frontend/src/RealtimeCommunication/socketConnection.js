@@ -9,7 +9,7 @@ import updateDirectChatHistory from "../shared/utils/chat";
 import { pushData, setDraw } from "../store/actions/drawAction";
 import { chatActions } from "../store/actions/chatActions";
 import * as roomHandler from "./roomHandler";
-import * as webRTCHandler from './webRTCHandler' 
+import * as webRTCHandler from "./webRTCHandler";
 var socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -44,38 +44,37 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("direct-chat-history", (data) => {
     updateDirectChatHistory(data);
   });
-  socket.on('direct-draw-history', (data)=>{
+  socket.on("direct-draw-history", (data) => {
     const id = store.getState().draw.id;
-    if(data._id.toString() === id.toString())
-      store.dispatch(pushData(data));
+    if (data._id.toString() === id.toString()) store.dispatch(pushData(data));
   });
-  socket.on('room-create', (data) =>{
-    roomHandler.newRoomCreated(data)
-  })
+  socket.on("room-create", (data) => {
+    roomHandler.newRoomCreated(data);
+  });
 
-  socket.on('active-rooms', data=>{
-    roomHandler.updateActiveRooms(data)
-  })
+  socket.on("active-rooms", (data) => {
+    roomHandler.updateActiveRooms(data);
+  });
 
-  socket.on('conn-prepare', data=>{
-    const {connUserSocketId} = data
-    webRTCHandler.prepareNewPeerConnection(connUserSocketId, false)
-    socket.emit('conn-init',{connUserSocketId: connUserSocketId})
-  })
+  socket.on("conn-prepare", (data) => {
+    const { connUserSocketId } = data;
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, false);
+    socket.emit("conn-init", { connUserSocketId: connUserSocketId });
+  });
 
-  socket.on('conn-init', data =>{
-    const {connUserSocketId} = data
-    webRTCHandler.prepareNewPeerConnection(connUserSocketId, true)
-  })
+  socket.on("conn-init", (data) => {
+    const { connUserSocketId } = data;
+    webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
+  });
 
-  socket.on('conn-signal', data =>{
-    webRTCHandler.handleSignalingData(data)
-  })
+  socket.on("conn-signal", (data) => {
+    webRTCHandler.handleSignalingData(data);
+  });
 
-  socket.on('room-participant-left', data =>{
-    console.log('a user just left room')
-    webRTCHandler.handleParticipantLeftRoom(data)
-  })
+  socket.on("room-participant-left", (data) => {
+    console.log("user left room");
+    webRTCHandler.handleParticipantLeftRoom(data);
+  });
 };
 
 export const sendDirectMessage = (data) => {
@@ -87,23 +86,23 @@ export const getDirectChatHistory = (data) => {
   socket.emit("direct-chat-history", data);
 };
 
-export const sendDataCanvas = (data) =>{
+export const sendDataCanvas = (data) => {
   // console.log(data)
   socket.emit("send-draw", data);
 };
 
-export const createNewRoom = () =>{
-  socket.emit('room-create')
-}
+export const createNewRoom = () => {
+  socket.emit("room-create");
+};
 
-export const joinRoom = (data) =>{
-  socket.emit('room-join', data);
-}
+export const joinRoom = (data) => {
+  socket.emit("room-join", data);
+};
 
-export const leaveRoom = (data) =>{
-  socket.emit('room-leave', data)
-}
+export const leaveRoom = (data) => {
+  socket.emit("room-leave", data);
+};
 
-export const signalPeerData = (data) =>{
-  socket.emit('conn-signal', data)
-}
+export const signalPeerData = (data) => {
+  socket.emit("conn-signal", data);
+};
