@@ -9,8 +9,6 @@ const roomJoinHandler = (socket, data) => {
     socketId: socket.id,
   };
 
-  console.log(participantDetails)
-
   const roomDetails = serverStore.getActiveRoom(roomId);
   serverStore.joinActiveRoom(roomId, participantDetails);
 
@@ -22,7 +20,6 @@ const roomJoinHandler = (socket, data) => {
     }
   });
 
-  console.log('new user joining room')
   roomsUpdates.updateRooms();
 };
 

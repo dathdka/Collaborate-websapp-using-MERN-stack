@@ -24,7 +24,7 @@ const server = http.createServer(app);
 
 
 
-mogoose.connect(process.env.MONGO_URI).then(() => {
+mogoose.connect(process.env.MONGO_LOCAL).then(() => {
 server.listen(PORT, ()=>{
     console.log(`server is running on PORT: ${PORT}`);
 });

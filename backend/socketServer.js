@@ -3,14 +3,14 @@ const {
   newConnectionHandler,
 } = require("./SocketHandler/newConnectionHandler");
 const disconnectHandler = require("./SocketHandler/disconnectHandler");
-const directMessageHandler = require('./SocketHandler/directMessageHandler');
-const directChatHistoryHandler = require('./SocketHandler/directChatHistoryHandler');
-const directDrawHistory = require('./SocketHandler/directDrawHistory');
-const roomCreateHandler = require('./SocketHandler/roomCreateHandler')
-const roomJoinHandler = require('./SocketHandler/roomJoinHandler')
-const roomLeaveHandler = require('./SocketHandler/roomLeaveHandler')
-const roomInitializeConnectionHandler = require('./SocketHandler/roomInitializeConnectionHandler')
-const roomSigalingDataHandler = require('./SocketHandler/roomSigalingDataHandler')
+const directMessageHandler = require("./SocketHandler/directMessageHandler");
+const directChatHistoryHandler = require("./SocketHandler/directChatHistoryHandler");
+const directDrawHistory = require("./SocketHandler/directDrawHistory");
+const roomCreateHandler = require("./SocketHandler/roomCreateHandler");
+const roomJoinHandler = require("./SocketHandler/roomJoinHandler");
+const roomLeaveHandler = require("./SocketHandler/roomLeaveHandler");
+const roomInitializeConnectionHandler = require("./SocketHandler/roomInitializeConnectionHandler");
+const roomSigalingDataHandler = require("./SocketHandler/roomSigalingDataHandler");
 
 const serverStore = require("./serverStore");
 
@@ -34,51 +34,48 @@ const registerSocketServer = (server) => {
   };
 
   io.on("connection", (socket) => {
-
     newConnectionHandler(socket, io);
     emitOnlineUsers();
-    
-    socket.on('direct-message', (data) =>{
-      directMessageHandler(socket,data);
+
+    socket.on("direct-message", (data) => {
+      directMessageHandler(socket, data);
     });
 
-    socket.on('direct-chat-history',(data) =>{
-      directChatHistoryHandler(socket,data);
+    socket.on("direct-chat-history", (data) => {
+      directChatHistoryHandler(socket, data);
     });
 
-    socket.on('send-draw',(data) =>{
-      directDrawHistory(socket,data);
+    socket.on("send-draw", (data) => {
+      directDrawHistory(socket, data);
     });
 
-    socket.on('room-create', ()=>{
-      roomCreateHandler(socket)
-    })
+    socket.on("room-create", () => {
+      roomCreateHandler(socket);
+    });
 
-    socket.on('room-join', (data)=>{
-      roomJoinHandler(socket,data);
-    })
-    
-    socket.on('room-leave', data =>{
-      roomLeaveHandler(socket,data)
-    })
+    socket.on("room-join", (data) => {
+      roomJoinHandler(socket, data);
+    });
 
-    socket.on('conn-init', data =>{
-      roomInitializeConnectionHandler(socket,data)
-    })
+    socket.on("room-leave", (data) => {
+      roomLeaveHandler(socket, data);
+    });
 
-    socket.on('conn-signal', data =>{
-      roomSigalingDataHandler(socket, data)
-    })
+    socket.on("conn-init", (data) => {
+      roomInitializeConnectionHandler(socket, data);
+    });
+
+    socket.on("conn-signal", (data) => {
+      roomSigalingDataHandler(socket, data);
+    });
     socket.on("disconnect", () => {
       disconnectHandler(socket);
     });
-
-
   });
 
-  setInterval (() =>{
+  setInterval(() => {
     emitOnlineUsers();
-  },[180000]);
+  }, [180000]);
 };
 
 module.exports = {
